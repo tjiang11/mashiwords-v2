@@ -1,0 +1,276 @@
+body {
+	margin: 0;
+	background-image: url("images/background.jpg");
+	background-size: cover;
+}
+
+.spymaster-body {
+	padding-top: 20%;
+	background: url("images/spymaster-background.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.codenames-logo {
+	height: 8vh;
+	padding-bottom: 5vh;
+	margin-bottom:1.5vh;
+	background-image: url("images/codenameslogo.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.card {
+	background-image: url("images/card_background.png");
+	background-size: 100% 100%;
+	border: 3px solid black;
+	border-radius: 10px;
+	float: left;
+	font-weight: bold;
+	padding-bottom: 8%;
+	margin: 0.9% 2% 0.9% 2%;
+	position: relative;
+	width: 15%;
+	text-transform: uppercase;
+}
+
+.card:hover {
+	border: 3px solid white;
+	cursor: pointer;
+}
+
+.content {
+	position: absolute;
+	height: 150%;
+    width: 90%;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+ 	margin-right: auto; 
+    padding: 15% 5%;
+    text-align: center;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+.content p {
+	font-size: 15px;
+}
+
+.sideMenu {
+    position: fixed;
+    width: 15%;
+    padding: 3vh 20px;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid #123432;
+    z-index: 0;
+    text-align: left;
+    background-color: #414e63;
+}
+
+.sideMenuTitle {
+	color: white;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.board {
+	position: absolute;
+	height: 94vh;
+	width: 80%;
+	left: 17%;
+	top: 3%;
+}
+
+.table{
+    display:table;
+    height:100%;
+    width:100%;
+}
+
+.table-cell{
+    display:table-cell;
+    vertical-align:middle;
+    height:100%;
+    width:100%;
+}
+
+/*.valign {
+	height: 80vh;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}*/
+
+.red1 {
+	background-image: url("images/red_agent_1.png");
+	background-size: cover;
+	color: transparent;
+}
+
+.blue1 {
+	background-image: url("images/blue_agent_1.png");
+	background-size: cover;
+	color: transparent;
+}
+
+.civilian1 {
+	background-image: url("images/civilian_1.png");
+	background-size: cover;
+	color: transparent;
+}
+
+.red2 {
+	background-image: url("images/red_agent_2.png");
+	background-size: cover;
+	color: transparent;
+}
+
+.blue2 {
+	background-image: url("images/blue_agent_2.png");
+	background-size: cover;
+	color: transparent;
+}
+
+.civilian2 {
+	background-image: url("images/civilian_2.png");
+	background-size: cover;
+	color: transparent;
+}
+
+.assassin {
+	background-image: url("images/assassin.png");
+	background-size: cover;
+	color: transparent;
+}
+
+.red1:hover, .blue1:hover, .civilian1:hover,
+.red2:hover, .blue2:hover, .civilian2:hover,
+.assassin:hover {
+	border: 3px solid white;
+	cursor: pointer;
+	text-shadow: black 2px 2px;
+	color: #EEEEEE;
+}
+
+.agent-select {
+	background-size: 100% 100%;
+	border-radius: 6px;
+	height: 100px;
+	margin-bottom: 10px;
+	border: 2px solid transparent;
+}
+
+.agent-select:hover {
+	border: 2px solid #EEEEEE;
+	cursor: pointer;
+}
+
+.agentselected {
+	border: 2px solid orange;
+}
+
+.agentselected:hover {
+	border: 2px solid orange;
+}
+
+.red-agent {
+	background-image: url("images/red_agent_1.png");
+}
+
+.blue-agent {
+	background-image: url("images/blue_agent_1.png");
+}
+
+.side-link {
+	font-family: sans-serif;
+	font-weight: bold;
+	color: #53e88e;
+	text-align: center;
+}
+
+.side-link:hover {
+	color: #EEEEEE;
+	cursor: pointer;
+}
+
+.btn-file {
+    position: relative;
+    padding-left: 20px;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.custom-file {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    height: 2.5rem;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.timerRunning {
+	border: 4px solid #53e88e;
+}
+
+#timerBar {
+	width: 100%;
+	height: 30px;
+	background-color: grey;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+#timerJuice {
+	width: 1%;
+	height: 30px;
+	background-color: #53e88e;
+}
+
+.timeOut {
+	background-color: #ffa100;
+	border: 4px solid red;
+}
+
+#startTimer {
+	float: left;
+}
+#stopTimer {
+	float: right;
+}
+
+#spymasterCard {
+	margin-top: 40px;
+}
+
+canvas {
+	background: url("images/spymaster_card.png");
+	background-size: cover;
+	padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

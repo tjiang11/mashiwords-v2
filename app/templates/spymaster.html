@@ -1,0 +1,11 @@
+<html ng-app="spymaster">
+	<head>
+		<link rel="stylesheet" href="{{ url_for('static', filename='board.css') }}">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
+		<script src="{{ url_for('static', filename='SpymasterController.js') }}"></script>
+	</head>
+	<body class="spymaster-body" ng-controller="SpymasterController">
+		<canvas id="spymasterCard" width="1000" height="1200">
+		</canvas>
+	</body>
+</html>

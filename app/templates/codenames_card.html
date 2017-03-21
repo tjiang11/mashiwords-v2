@@ -1,0 +1,9 @@
+<div class="card" ng-class="{red1: ctrl.colorAgent === 'RED1', red2: ctrl.colorAgent === 'RED2', blue1: ctrl.colorAgent === 'BLUE1', blue2: ctrl.colorAgent === 'BLUE2', civilian1: ctrl.colorAgent === 'CIV1', civilian2: ctrl.colorAgent === 'CIV2', assassin: ctrl.color === 'ASSASSIN'}" ng-click="ctrl.reveal()">
+	<div class="content">
+		<div class="table">
+    		<div class="table-cell">
+        		<p>{{ctrl.content|angular}}</p>
+    		</div>
+		</div>
+	</div>
+</div>

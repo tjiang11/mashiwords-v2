@@ -1,0 +1,28 @@
+<div class="modal fade">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">How to Play</h4>
+			</div>
+			<div class="modal-body">
+				<div>
+					<p>Mashiwords is a game for 3 or more players.</p>
+
+					<p>The board consists of 25 words in a 5x5 grid. There are two teams: Team Mashimaro (the bunny) and Team Doraemon (the blue cat). Each card on the board belongs to either Team Mashimaro, Team Doraemon, Pusheen, or Evil Pusheen. 9 cards belong to Team Mashimaro, 8 to Doraemon, 7 to Innocent Pusheens, and 1 to Evil Pusheen.</p>
+
+					<p>Each team has a designated person called the 'spymaster'. The spymasters can view a card (tjiang11.github.io/mashiwords/spymaster) that informs them who each card on the board belongs to. It would be preferable to view the spymaster card on a separate mobile device. The spymasters need to get their teammates to guess which words belong to their team by giving them clues.</p>
+
+					<p>Team Mashimaro starts. The spymaster for Team Mashimaro gives a hint. Each hint consists of one word and one number, where the word is the textual hint and the number is how many words on the board the spymaster is referring to. For example, if 'Tears' and 'Plant' belong to Team Mashimaro, perhaps a clue the spymaster would give is 'Weepingbell, 2'. Clues must not be equal to or contain as prefixes/suffixes any word on the board. Clues can only be one word, unless they are a proper name (such as The Legend Of Zelda). After giving the clue, the teammates for the spymaster attempt to guess what words the spymaster is referring to. Teammates pick one word at a time and may only attempt N + 1 guesses where N is the number the spymaster gave in the hint. Once a wrong guess is made, that team's turn ends immediately and the spymaster for the opposing team can begin their round. If someone guesses on Evil Pusheen, that team loses the game. The first team to claim all its cards wins. </p>
+
+					<p>A default list of words is provided, but you are given the option to upload your own words to play with!</p>
+
+					<p>A timer is also available in case anyone gets impatient :) Have fun!</p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" ng-click="close()" class="btn btn-primary" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
