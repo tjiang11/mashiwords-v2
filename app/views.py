@@ -12,8 +12,12 @@ def index():
 def serve_partial():
     return render_template("codenames_card.html")
 
-@app.route('/spymaster')
-def spymaster():
+@app.route('/spymaster_body.html')
+def spymaster_body():
+    return render_template("spymaster_body.html")
+
+@app.route('/spymaster/<game_id>')
+def spymaster(game_id):
     return render_template("spymaster.html")
 
 @app.route('/create_game', methods=['POST'])
@@ -43,6 +47,7 @@ def create_game():
     }
     return jsonify(data=resp_body)
 
-@app.route('/spymaster/<id>', methods=['GET'])
-def join_game():
-    return 'test'
+@app.route('/game_data/<id>', methods=['GET'])
+def join_game(id):
+    game = models.Game.query.get(id)
+    return jsonify(data=game.grid)

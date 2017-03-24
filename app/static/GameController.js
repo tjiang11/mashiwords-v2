@@ -2,27 +2,7 @@ var codenames = angular.module('codenames', ['ngRoute', 'angularModalService']);
 
 codenames.config(['$locationProvider', '$routeProvider',
 	function config($locationProvider, $routeProvider) {
-		$locationProvider.hashPrefix('!');
 
-		$routeProvider.
-			when("/", {
-				templateUrl: 'index.html',
-				controller: 'GameController'
-			}).
-			when('/game', {
-				templateUrl: 'index.html',
-				controller: 'GameController'
-			}).
-			when('/spymaster', {
-				templateUrl: 'spymaster.html',
-				controller: 'SpymasterController'
-			}).
-			otherwise('/game');
-
-			$locationProvider.html5Mode({
-				enabled: true,
-				requireBase: false
-			});
 	}
 ]);
 

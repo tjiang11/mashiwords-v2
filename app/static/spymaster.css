@@ -1,0 +1,25 @@
+body {
+    padding-top: 20%;
+    background: url("images/spymaster-background.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#spymasterCard {
+	margin-top: 40px;
+}
+
+canvas {
+	background: url("images/spymaster_card.png");
+	background-size: cover;
+	padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
