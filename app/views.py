@@ -12,6 +12,14 @@ def index():
 def serve_partial():
     return render_template("codenames_card.html")
 
+@app.route('/info-modal.html')
+def serve_info_modal():
+    return render_template("info-modal.html")
+
+@app.route('/custom-words-modal.html')
+def serve_custom_words_modal():
+    return render_template("custom-words-modal.html")
+
 @app.route('/spymaster_body.html')
 def spymaster_body():
     return render_template("spymaster_body.html")

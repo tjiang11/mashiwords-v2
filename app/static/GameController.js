@@ -6,14 +6,22 @@ codenames.config(['$locationProvider', '$routeProvider',
 	}
 ]);
 
-codenames.controller('GameController', ['$scope', 'ModalService', 'colorTrackerService', 'customWordService', 'gridTrackerService',
-	function GameController($scope, ModalService, colorTrackerService, customWordService, gridTrackerService) {
+codenames.controller('GameController', [
+	'$scope', 'ModalService', 'colorTrackerService',
+	'customWordService', 'gridTrackerService', 'cardCountService',
+	function GameController(
+		$scope, ModalService, colorTrackerService,
+		customWordService, gridTrackerService, cardCountService) {
 		var ctrl = this;
+		ctrl.cardCountService = cardCountService.model;
+		ctrl.baseUrl = window.location.origin;
 		ctrl.timerRunning = false;
 		ctrl.timeOut = false;
 		customWordService.init();
 		var DEFAULT_WORDS = [];
 		ctrl.grid = [];
+		ctrl.gameCode = 'undefined';
+		ctrl.dataLoaded = false;
 		jQuery.get("static/res/default_words", function(data) {
 			ctrl.cards = [];
 			var allWords = data.split("\n");
@@ -36,11 +44,13 @@ codenames.controller('GameController', ['$scope', 'ModalService', 'colorTrackerS
 		jQuery.post("/create_game", function(response) {
 			console.log("Creating game...");
 			console.log(response.data);
+			ctrl.gameCode = response.data.id;
 			for (var i = 0; i < response.data.grid.length; i++) {
 				ctrl.grid.push(response.data.grid[i]);
 			}
 			gridTrackerService.setGrid(ctrl.grid);
 			console.log(ctrl.grid);
+			ctrl.dataLoaded = true;
 		});
 
 		ctrl.colorSelected = '';
@@ -73,7 +83,10 @@ codenames.controller('GameController', ['$scope', 'ModalService', 'colorTrackerS
 							var randomIndex = Math.floor(Math.random() * customWords.length);
 							if (!(randomIndex in wordsDict) && customWords[randomIndex].length > 0) {
 								wordsDict[randomIndex] = true;
-								ctrl.cards.push(customWords[randomIndex])
+								ctrl.cards.push({
+									word: customWords[randomIndex],
+									index: numCards - 1
+								});
 								numCards--;
 							}
 						}
@@ -137,8 +150,8 @@ codenames.controller('ComplexController', [
 	  
 		$scope.close = function() {
 	 		close({
-	    	name: $scope.name,
-	    	age: $scope.age
+		    	name: $scope.name,
+		    	age: $scope.age
 	    	}, 500);
 		};
 
@@ -153,32 +166,48 @@ codenames.controller('InfoController', [function() {}
 
 codenames.component('codenamesCard', {
     templateUrl: 'codenames_card.html',
-	controller: function($scope, colorTrackerService, gridTrackerService) {
+	controller: function($scope, colorTrackerService, gridTrackerService,
+		cardCountService) {
 		this.color = '';
-		this.colorAgent = '';
 		this.colored = true;
-		// this.changeColor = function() {
-		// 	console.log(this.index);
-		// 	console.log(gridTrackerService.getCurrentGrid());
-		// 	if (this.color === colorTrackerService.getCurrentColor()) {
-		// 		this.color = '';
-		// 		this.colorAgent = '';
-		// 	} else {
-		// 		this.color = colorTrackerService.getCurrentColor();
-		// 		if (this.color === 'RED' || this.color === 'BLUE' || this.color === 'CIV') {
-		// 			this.colorAgent = Math.random() < .5 ? this.color + '1' : this.color + '2';
-		// 		} else {
-		// 			this.colorAgent = '';
-		// 		}
-		// 	}
-		// };
 		this.reveal = function() {
 			var color = gridTrackerService.getCurrentGrid()[this.index];
-			switch (color) {
-				case "0": this.colorAgent = 'RED1'; break;
-				case "1": this.colorAgent = 'BLUE2'; break;
-				case "2": this.colorAgent = 'CIV1'; break;
-				case "3": this.color = 'ASSASSIN'; break;
+			if (this.color === '') {
+				var agentNo = Math.random() < .5 ? '1' : '2';
+				switch (color) {
+					case "0": 
+						this.color = 'RED' + agentNo; 
+						cardCountService.model.mash += 1;
+						break;
+					case "1": 
+						this.color = 'BLUE' + agentNo; 
+						cardCountService.model.dora += 1;
+						break;
+					case "2": 
+						this.color = 'CIV' + agentNo; 
+						cardCountService.model.push += 1;
+						break;
+					case "3":
+						this.color = 'ASSASSIN';
+						cardCountService.model.assa += 1;
+						break;
+				}
+			} else {
+				this.color = '';
+				switch(color) {
+					case "0":
+						cardCountService.model.mash -= 1;
+						break;
+					case "1":
+						cardCountService.model.dora -= 1;
+						break;
+					case "2":
+						cardCountService.model.push -= 1;
+						break;
+					case "3":
+						cardCountService.model.assa -= 1;
+						break;
+				}
 			}
 		}
 	},
@@ -198,6 +227,16 @@ codenames.factory('colorTrackerService', function() {
 		getCurrentColor: function() {
 			return this.currentColor;
 		}
+	};
+});
+
+codenames.service('cardCountService', function() {
+	var cardCountService = this;
+	cardCountService.model = {
+		mash: 0,
+		dora: 0,
+		push: 0,
+		assa: 0
 	};
 });
 
@@ -240,7 +279,6 @@ codenames.factory('customWordService', function() {
 					}
 				}
 				this.customWords = newWords;
-				console.log(this.customWords);
 				callback(this.customWords);
 			};
 			reader.readAsText(this.customWordFile);

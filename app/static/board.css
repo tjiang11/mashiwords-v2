@@ -152,7 +152,8 @@ body {
 .agent-select {
 	background-size: 100% 100%;
 	border-radius: 6px;
-	height: 100px;
+	height: 40px;
+	width: 50%;
 	margin-bottom: 10px;
 	border: 2px solid transparent;
 }
@@ -160,6 +161,21 @@ body {
 .agent-select:hover {
 	border: 2px solid #EEEEEE;
 	cursor: pointer;
+}
+
+.agent-number-of-cards {
+	color: orange;
+	float: right;
+	width: 50%;
+}
+
+.agent-number-of-cards > p {
+	font-size: 2em;
+	vertical-align: middle;
+	width: 100%;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
 }
 
 .agentselected {
@@ -225,7 +241,7 @@ body {
 
 #timerBar {
 	width: 100%;
-	height: 30px;
+	height: 15px;
 	background-color: grey;
 	border-radius: 10px;
 	overflow: hidden;
@@ -247,6 +263,9 @@ body {
 }
 #stopTimer {
 	float: right;
+}
+#spymasterCardLink {
+	margin-top: 40px;
 }
 
 

@@ -14,17 +14,25 @@
 	<body ng-controller="GameController as ctrl">
 		<div class="sideMenu">
 			<div class="codenames-logo"></div>
+			<div class="agent-number-of-cards"><p>{{ctrl.cardCountService.mash|angular}}/9
+			</p></div>
 			<div class="agent-select red-agent" ng-class="{agentselected: ctrl.colorSelected === 'RED'}" ng-click="ctrl.changeColor('RED')"></div>
+			<div class="agent-number-of-cards"><p>
+			{{ctrl.cardCountService.dora|angular}}/8
+			</p></div>
 			<div class="agent-select blue-agent" ng-class="{agentselected: ctrl.colorSelected === 'BLUE'}" ng-click="ctrl.changeColor('BLUE')"></div>
+			<div class="agent-number-of-cards"><p>{{ctrl.cardCountService.push|angular}}/7</p></div>
 			<div class="agent-select civilian1" ng-class="{agentselected: ctrl.colorSelected === 'CIV'}" ng-click="ctrl.changeColor('CIV')"></div>
+			<div class="agent-number-of-cards"><p>{{ctrl.cardCountService.assa|angular}}/1</p></div>
 			<div class="agent-select assassin" ng-class="{agentselected: ctrl.colorSelected ===
 			'ASSASSIN'}" ng-click="ctrl.changeColor('ASSASSIN')"></div>
 			<div id="timerBar" ng-class="{timerRunning: ctrl.timerRunning, timeOut: ctrl.timeOut}"><div id="timerJuice"></div></div>
 			<div class="side-link" id="startTimer" ng-click="ctrl.startTimer()">Start</div>
 			<div class="side-link" id="stopTimer" ng-click="ctrl.stopTimer()">Stop</div>
-			<p id="spymasterCard" class="side-link" ng-click="ctrl.openSpymasterCard()">Spymaster Card</p>
-			<p class="side-link" ng-click="ctrl.showComplex()">Custom Words...</p>
-			<p class="side-link" ng-click="ctrl.showInfo()">How to Play</p>
+			<p id="spymasterCardLink" class="side-link" ng-click="ctrl.openSpymasterCard()" ng-if="ctrl.dataLoaded" ng-cloak>Spymaster Card URL</p>
+			<pre ng-if="ctrl.dataLoaded" ng-cloak><code>{{ctrl.baseUrl|angular}}/spymaster/{{ctrl.gameCode|angular}}</code></pre>
+			<p class="side-link" ng-if="ctrl.dataLoaded" ng-click="ctrl.showComplex()" ng-cloak >Custom Words...</p>
+			<p class="side-link" ng-if="ctrl.dataLoaded" ng-click="ctrl.showInfo()" ng-cloak>How to Play</p>
 		</div>
 
 		<div class="board">
