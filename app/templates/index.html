@@ -33,9 +33,9 @@
 			<div class="side-link" id="stopTimer" ng-click="ctrl.stopTimer()">Stop</div>
 			<div class="side-link" style="margin-top: 30px;" ng-click="ctrl.startNewRound()">New Game</div>
 			<div class="side-link" style="margin-top: 10px" ng-click="ctrl.changeSpymasterCard()">Change Spymaster Card</div>
-			<p id="spymasterCardLink" class="side-link" ng-click="ctrl.openSpymasterCard()" ng-if="ctrl.dataLoaded" ng-cloak>Spymaster Card URL</p>
+			<p id="spymasterCardLink" class="side-link" ng-if="ctrl.dataLoaded" ng-cloak>Spymaster Card URL</p>
 			<pre ng-if="ctrl.dataLoaded" ng-cloak><code>{{ctrl.baseUrl|angular}}/s/{{ctrl.gameCode|angular}}</code></pre>
-			<p class="side-link" ng-if="ctrl.dataLoaded" ng-click="ctrl.showComplex()" ng-cloak >Custom Words...</p>
+			<p class="side-link" ng-if="ctrl.dataLoaded" ng-click="ctrl.showCustomWordsModal()" ng-cloak >Custom Words...</p>
 			<p class="side-link" ng-if="ctrl.dataLoaded" ng-click="ctrl.showInfo()" ng-cloak>How to Play</p>
 		</div>
 

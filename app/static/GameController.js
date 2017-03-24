@@ -67,11 +67,7 @@ codenames.controller('GameController', [
 			colorTrackerService.changeColors(color);
 		};
 
-		ctrl.openSpymasterCard = function() {
-			open('spymaster.html');
-		};
-
-		ctrl.showComplex = function() {
+		ctrl.showCustomWordsModal = function() {
 			ModalService.showModal({
 				templateUrl: "custom-words-modal.html",
 				controller: "ComplexController",

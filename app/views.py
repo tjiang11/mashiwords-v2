@@ -1,34 +1,34 @@
-from app import app, db, models
+from app import application, db, models
 from flask import render_template, jsonify
 import random
 import string
 
-@app.route('/')
-@app.route('/index')
+@application.route('/')
+@application.route('/index')
 def index():
     return render_template("index.html")
 
-@app.route('/codenames_card.html')
+@application.route('/codenames_card.html')
 def serve_partial():
     return render_template("codenames_card.html")
 
-@app.route('/info-modal.html')
+@application.route('/info-modal.html')
 def serve_info_modal():
     return render_template("info-modal.html")
 
-@app.route('/custom-words-modal.html')
+@application.route('/custom-words-modal.html')
 def serve_custom_words_modal():
     return render_template("custom-words-modal.html")
 
-@app.route('/spymaster_body.html')
+@application.route('/spymaster_body.html')
 def spymaster_body():
     return render_template("spymaster_body.html")
 
-@app.route('/s/<game_id>')
+@application.route('/s/<game_id>')
 def spymaster(game_id):
     return render_template("spymaster.html")
 
-@app.route('/create_game', methods=['POST'])
+@application.route('/create_game', methods=['POST'])
 def create_game():
     random_id = generate_random_id()
     grid = generate_grid()
@@ -41,12 +41,12 @@ def create_game():
     }
     return jsonify(data=resp_body)
 
-@app.route('/game_data/<id>', methods=['GET'])
+@application.route('/game_data/<id>', methods=['GET'])
 def join_game(id):
     game = models.Game.query.get(id)
     return jsonify(data=game.grid)
 
-@app.route('/new_round/<id>', methods=['PUT'])
+@application.route('/new_round/<id>', methods=['PUT'])
 def new_round(id):
     new_grid = generate_grid()
     game = models.Game.query.get(id)

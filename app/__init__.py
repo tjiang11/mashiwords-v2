@@ -2,9 +2,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_triangle import Triangle
 
-app = Flask(__name__)
-app.config.from_object('config')
-Triangle(app)
-db = SQLAlchemy(app)
+application = Flask(__name__)
+application.config.from_object('config')
+Triangle(application)
+db = SQLAlchemy(application)
 
 from app import views, models
