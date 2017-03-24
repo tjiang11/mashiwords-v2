@@ -4,7 +4,8 @@
   "description": "Play codenames in your browser!",
   "main": "GameController.js",
   "dependencies": {
-    "angular-modal-service": "^0.10.1"
+    "angular-modal-service": "^0.10.1",
+    "angular-ui-notification": "^0.3.6"
   },
   "devDependencies": {},
   "scripts": {

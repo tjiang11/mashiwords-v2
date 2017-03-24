@@ -24,28 +24,14 @@ def serve_custom_words_modal():
 def spymaster_body():
     return render_template("spymaster_body.html")
 
-@app.route('/spymaster/<game_id>')
+@app.route('/s/<game_id>')
 def spymaster(game_id):
     return render_template("spymaster.html")
 
 @app.route('/create_game', methods=['POST'])
 def create_game():
-    random_id = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(6))
-    
-    cardsRemaining = [9, 8, 7]
-    totalCardsRemaining = 24
-    grid = ''
-    while totalCardsRemaining > 0:
-        randInd = random.randrange(0, 3, 1)
-        if cardsRemaining[randInd] > 0:
-            cardsRemaining[randInd] -= 1
-            totalCardsRemaining -= 1
-            randomPos = random.randrange(0, len(grid) + 1, 1)
-            grid = grid[:randomPos] + str(randInd) + grid[randomPos:]
-
-    randomPos = random.randrange(0, len(grid) + 1, 1)
-    grid = grid[:randomPos] + '3' + grid[randomPos:]
-
+    random_id = generate_random_id()
+    grid = generate_grid()
     game = models.Game(id=random_id, grid=grid)
     db.session.add(game)
     db.session.commit()
@@ -59,3 +45,32 @@ def create_game():
 def join_game(id):
     game = models.Game.query.get(id)
     return jsonify(data=game.grid)
+
+@app.route('/new_round/<id>', methods=['PUT'])
+def new_round(id):
+    new_grid = generate_grid()
+    game = models.Game.query.get(id)
+    game.grid = new_grid
+    db.session.commit()
+    return jsonify(data=game.grid)
+
+def generate_random_id():
+    return ''.join(random.SystemRandom()
+        .choice(string.ascii_lowercase + string.digits) 
+        for _ in range(6))
+
+def generate_grid():
+    cardsRemaining = [9, 8, 7]
+    totalCardsRemaining = 24
+    new_grid = ''
+    while totalCardsRemaining > 0:
+        randInd = random.randrange(0, 3, 1)
+        if cardsRemaining[randInd] > 0:
+            cardsRemaining[randInd] -= 1
+            totalCardsRemaining -= 1
+            randomPos = random.randrange(0, len(new_grid) + 1, 1)
+            new_grid = new_grid[:randomPos] + str(randInd) + new_grid[randomPos:]
+
+    randomPos = random.randrange(0, len(new_grid) + 1, 1)
+    new_grid = new_grid[:randomPos] + '3' + new_grid[randomPos:]
+    return new_grid

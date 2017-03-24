@@ -1,4 +1,4 @@
-var codenames = angular.module('codenames', ['ngRoute', 'angularModalService']);
+var codenames = angular.module('codenames', ['ngRoute', 'angularModalService', 'ui-notification']);
 
 codenames.config(['$locationProvider', '$routeProvider',
 	function config($locationProvider, $routeProvider) {
@@ -7,11 +7,13 @@ codenames.config(['$locationProvider', '$routeProvider',
 ]);
 
 codenames.controller('GameController', [
-	'$scope', 'ModalService', 'colorTrackerService',
+	'$scope', '$rootScope', 'ModalService', 'colorTrackerService',
 	'customWordService', 'gridTrackerService', 'cardCountService',
+	'Notification',
 	function GameController(
-		$scope, ModalService, colorTrackerService,
-		customWordService, gridTrackerService, cardCountService) {
+		$scope, $rootScope, ModalService, colorTrackerService,
+		customWordService, gridTrackerService, cardCountService,
+		Notification) {
 		var ctrl = this;
 		ctrl.cardCountService = cardCountService.model;
 		ctrl.baseUrl = window.location.origin;
@@ -23,9 +25,13 @@ codenames.controller('GameController', [
 		ctrl.gameCode = 'undefined';
 		ctrl.dataLoaded = false;
 		jQuery.get("static/res/default_words", function(data) {
-			ctrl.cards = [];
 			var allWords = data.split("\n");
 			DEFAULT_WORDS = angular.copy(allWords);
+			pickWords(allWords);
+		});
+
+		var pickWords = function(allWords) {
+			ctrl.cards = [];
 			var numCards = 25;
 			var wordsDict = {};
 			while (numCards > 0) {
@@ -39,7 +45,7 @@ codenames.controller('GameController', [
 				}
 			}
 			$scope.$apply();
-		});
+		};
 
 		jQuery.post("/create_game", function(response) {
 			console.log("Creating game...");
@@ -137,6 +143,46 @@ codenames.controller('GameController', [
 			elem.style.width = 0;
 			clearInterval(timerInterval);
 		};
+
+
+		ctrl.startNewRound = function() {
+			$.ajax({
+				url: '/new_round/' + ctrl.gameCode,
+				method: 'PUT',
+				data: {},
+				success: function(response) {
+					cardCountService.reset();
+					$rootScope.$broadcast('new-round');
+					ctrl.grid = [];
+					for (var i = 0; i < response.data.length; i++) {
+						ctrl.grid.push(response.data[i]);
+					}
+					gridTrackerService.setGrid(ctrl.grid);
+					$scope.$digest();
+					pickWords(DEFAULT_WORDS);
+					Notification('New round started. Please have the spymaster refresh.');
+				}
+			});
+		}
+
+		ctrl.changeSpymasterCard = function() {
+			$.ajax({
+				url: '/new_round/' + ctrl.gameCode,
+				method: 'PUT',
+				data: {},
+				success: function(response) {
+					cardCountService.reset();
+					$rootScope.$broadcast('new-round');
+					ctrl.grid = [];
+					for (var i = 0; i < response.data.length; i++) {
+						ctrl.grid.push(response.data[i]);
+					}
+					gridTrackerService.setGrid(ctrl.grid);
+					$scope.$digest();
+					Notification.success('Spymaster card changed. Please have the spymaster refresh.');
+				}
+			});
+		}
 	}
 ]);
 
@@ -168,8 +214,8 @@ codenames.component('codenamesCard', {
     templateUrl: 'codenames_card.html',
 	controller: function($scope, colorTrackerService, gridTrackerService,
 		cardCountService) {
+		var codenamesCard = this;
 		this.color = '';
-		this.colored = true;
 		this.reveal = function() {
 			var color = gridTrackerService.getCurrentGrid()[this.index];
 			if (this.color === '') {
@@ -210,6 +256,11 @@ codenames.component('codenamesCard', {
 				}
 			}
 		}
+
+		$scope.$on('new-round', function(event, args) {
+			codenamesCard.color = '';
+			$scope.$digest();
+		});
 	},
 	controllerAs: 'ctrl',
 	bindings: {
@@ -237,6 +288,12 @@ codenames.service('cardCountService', function() {
 		dora: 0,
 		push: 0,
 		assa: 0
+	};
+	cardCountService.reset = function() {
+		cardCountService.model.mash = 0;
+		cardCountService.model.dora = 0;
+		cardCountService.model.push = 0;
+		cardCountService.model.assa = 0;
 	};
 });
 

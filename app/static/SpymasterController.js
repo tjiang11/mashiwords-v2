@@ -3,7 +3,7 @@ var spymaster = angular.module('spymaster', ['ngRoute']);
 spymaster.config(['$routeProvider', '$locationProvider',
 	function($routeProvider, $locationProvider) {
 	$routeProvider.
-		when("/spymaster/:game_id", {
+		when("/s/:game_id", {
 			templateUrl: 'spymaster_body.html',
 			controller: 'SpymasterController'
 		});
